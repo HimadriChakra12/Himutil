@@ -1,4 +1,6 @@
 clear
+set-alias writeh write-host
+set-alias readh read-host
 Write-host "       
           ##     ## ######  ####       ##### ####    #### ########### ####### ####                    
          ##     ##   ###   #####     ###### ####    ####     ####      ###   ####  1/ Activation
@@ -12,5 +14,18 @@ write-host "
 
 "
 
-$choice = Read-host "  Which option You wanna be over?"
- 
+$mainchoice = Read-host "  Which option You wanna be over?"
+
+switch ($mainchoice){
+    1{:q
+
+    2{
+        write-host "  
+      1. CTT Standard Tweaks
+      2. CTT Advanced Tweaks
+      3. 1 & 2
+      4. 3 with MSapps Removal
+        "
+    }
+}
+
