@@ -62,24 +62,6 @@ ping 127.0.0.1 -n 20
 )
 cls
 
-::  Check LF line ending
-
-pushd "%~dp0"
->nul findstr /v "$" "%~nx0" && (
-echo:
-echo Error - Script either has LF line ending issue or an empty line at the end of the script is missing.
-echo:
-echo:
-echo Check this webpage for help - %mas%troubleshoot
-echo:
-echo:
-ping 127.0.0.1 -n 20 >nul
-popd
-exit /b
-)
-popd
-
-::========================================================================================================================================
 
 cls
 color 07
@@ -10348,6 +10330,188 @@ exit /b
 
 :+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+:KMS38Activation
+
+::  To activate, run the script with "/KMS38" parameter or change 0 to 1 in below line
+set _act=0
+
+::  To remove KMS38 protection, run the script with /KMS38-RemoveProtection parameter or change 0 to 1 in below line
+set _rem=0
+
+::  To disable changing edition if current edition doesn't support KMS38 activation, change the value to 1 from 0 or run the script with "/KMS38-NoEditionChange" parameter
+set _NoEditionChange=0
+
+::  If value is changed in above lines or parameter is used then script will run in unattended mode
+
+::========================================================================================================================================
+
+cls
+color 07
+title  KMS38 Activation %masver%
+
+set _args=
+set _elev=
+set _unattended=0
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args (
+for %%A in (%_args%) do (
+if /i "%%A"=="/KMS38"                  set _act=1
+if /i "%%A"=="/KMS38-RemoveProtection" set _rem=1
+if /i "%%A"=="/KMS38-NoEditionChange"  set _NoEditionChange=1
+if /i "%%A"=="-el"                     set _elev=1
+)
+)
+
+for %%A in (%_act% %_rem% %_NoEditionChange%) do (if "%%A"=="1" set _unattended=1)
+
+::========================================================================================================================================
+
+set _k38=
+call :dk_setvar
+set "specific_kms=SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\55c92734-d682-4d71-983e-d6ec3f16059f"
+
+if %winbuild% LSS 14393 (
+%eline%
+echo Unsupported OS version detected [%winbuild%].
+echo KMS38 activation is only supported on Windows 10/11/Server, build 14393 and later.
+echo:
+if %winbuild% LSS 10240 (
+call :dk_color %Blue% "Use TSforge activation option from the main menu."
+) else (
+call :dk_color %Blue% "Use HWID activation option from the main menu."
+)
+goto dk_done
+)
+
+::========================================================================================================================================
+
+if %_rem%==1 goto :k_uninstall
+
+:k_menu
+
+if %_unattended%==0 (
+cls
+if not defined terminal mode 76, 25
+title  KMS38 Activation %masver%
+
+echo:
+echo:
+echo:
+echo:
+echo:           ______________________________________________________
+echo:
+echo                 [1] KMS38 Activation
+echo                 ____________________________________________
+echo:
+echo                 [2] Remove KM38 Protection
+echo:
+echo                 [0] %_exitmsg%
+echo:           ______________________________________________________
+echo: 
+call :dk_color2 %_White% "              " %_Green% "Choose a menu option using your keyboard [1,2,0]"
+choice /C:120 /N
+set _el=!errorlevel!
+if !_el!==3  exit /b
+if !_el!==2  goto :k_uninstall
+if !_el!==1  goto :k_menu2
+goto :k_menu
+)
+
+::========================================================================================================================================
+
+:k_menu2
+
+cls
+if not defined terminal (
+mode 110, 34
+if exist "%SysPath%\spp\store_test\" mode 134, 34
+)
+title  KMS38 Activation %masver%
+
+echo:
+echo Initializing...
+call :dk_chkmal
+
+if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-Server*CorEdition~*.mum" if not exist "%SysPath%\clipup.exe" set a_cor=1
+if not exist %SysPath%\sppsvc.exe (set _fmiss=sppsvc.exe)
+if not exist %SysPath%\ClipUp.exe if not defined a_cor (set _fmiss=%_fmiss%ClipUp.exe)
+
+if defined _fmiss (
+%eline%
+echo [%_fmiss%] file is missing, aborting...
+echo:
+if not defined results (
+call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run DISM Restore and SFC Scan options."
+call :dk_color %Blue% "After that, restart system and try activation again."
+echo:
+set fixes=%fixes% %mas%troubleshoot
+call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%troubleshoot"
+)
+goto dk_done
+)
+
+::========================================================================================================================================
+
+set spp=SoftwareLicensingProduct
+set sps=SoftwareLicensingService
+
+call :dk_ckeckwmic
+call :dk_checksku
+call :dk_product
+call :dk_sppissue
+
+::========================================================================================================================================
+
+::  Check if system is permanently activated or not
+
+call :dk_checkperm
+if defined _perm (
+cls
+echo ___________________________________________________________________________________________
+echo:
+call :dk_color2 %_White% "     " %Green% "%winos% is already permanently activated."
+call :dk_color2 %_White% "     " %Gray% "Activation is not required."
+echo ___________________________________________________________________________________________
+if %_unattended%==1 goto dk_done
+echo:
+choice /C:10 /N /M ">    [1] Activate Anyway [0] %_exitmsg% : "
+if errorlevel 2 exit /b
+)
+cls
+
+::========================================================================================================================================
+
+::  Check Evaluation version
+
+set _eval=
+set _evalserv=
+
+if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-*EvalEdition~*.mum" set _eval=1
+if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-Server*EvalEdition~*.mum" set _evalserv=1
+if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-Server*EvalCorEdition~*.mum" set _eval=1 & set _evalserv=1
+
+if defined _eval (
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul2% | find /i "Eval" %nul1% && (
+%eline%
+echo [%winos% ^| %winbuild%]
+if defined _evalserv (
+echo Server Evaluation cannot be activated. Convert it to full Server OS.
+echo:
+call :dk_color %Blue% "Go Back to main menu and use [Change Edition] option."
+) else (
+echo Evaluation editions cannot be activated outside of their evaluation period.
+call :dk_color %Blue% "Use TSforge activation option from the main menu to reset evaluation period."
+echo:
+set fixes=%fixes% %mas%evaluation_editions
+call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%evaluation_editions"
+)
+goto dk_done
+)
+)
+
+::========================================================================================================================================
 
 :: Check clipup.exe for the detection and activation of server cor and acor editions
 
@@ -17653,4 +17817,6 @@ if ($appIdsList.Count -gt 0) {
 ::========================================================================================================================================
 ::
 :: Leave empty line below
+
+
 
