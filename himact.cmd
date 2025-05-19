@@ -327,6 +327,10 @@ set _elev=
 if defined _args echo "%_args%" | find /i "/S" %nul% && (set "_silent=%nul%") || (set _silent=)
 if defined _args echo "%_args%" | find /i "/" %nul% && (
 echo "%_args%" | find /i "/HWID"   %nul% && (setlocal & cls & (call :HWIDActivation    %_args% %_silent%) & endlocal)
+echo "%_args%" | find /i "/KMS38"  %nul% && (setlocal & cls & (call :KMS38Activation   %_args% %_silent%) & endlocal)
+echo "%_args%" | find /i "/Z-"     %nul% && (setlocal & cls & (call :TSforgeActivation %_args% %_silent%) & endlocal)
+echo "%_args%" | find /i "/K-"     %nul% && (setlocal & cls & (call :KMSActivation     %_args% %_silent%) & endlocal)
+echo "%_args%" | find /i "/Ohook"  %nul% && (setlocal & cls & (call :OhookActivation   %_args% %_silent%) & endlocal)
 exit /b
 )
 
@@ -1895,6 +1899,108 @@ set notfoundaltactID=1
 exit /b
 
 :+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+:OhookActivation
+
+::  To activate Office with Ohook activation, run the script with "/Ohook" parameter or change 0 to 1 in below line
+set _act=0
+
+::  To remove Ohook activation, run the script with /Ohook-Uninstall parameter or change 0 to 1 in below line
+set _rem=0
+
+::  If value is changed in above lines or parameter is used then script will run in unattended mode
+
+::========================================================================================================================================
+
+cls
+color 07
+title  Ohook Activation %masver%
+
+set _args=
+set _elev=
+set _unattended=0
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args (
+for %%A in (%_args%) do (
+if /i "%%A"=="/Ohook"                  set _act=1
+if /i "%%A"=="/Ohook-Uninstall"        set _rem=1
+if /i "%%A"=="-el"                     set _elev=1
+)
+)
+
+for %%A in (%_act% %_rem%) do (if "%%A"=="1" set _unattended=1)
+
+::========================================================================================================================================
+
+if %_rem%==1 goto :oh_uninstall
+
+:oh_menu
+
+if %_unattended%==0 (
+cls
+if not defined terminal mode 76, 25
+title  Ohook Activation %masver%
+call :oh_checkapps
+echo:
+echo:
+echo:
+echo:
+if defined checknames (call :dk_color %_Yellow% "                Close [!checknames!] before proceeding...")
+echo         ____________________________________________________________
+echo:
+echo                 [1] Install Ohook Office Activation
+echo:
+echo                 [2] Uninstall Ohook
+echo                 ____________________________________________
+echo:
+echo                 [3] Download Office
+echo:
+echo                 [0] %_exitmsg%
+echo         ____________________________________________________________
+echo: 
+call :dk_color2 %_White% "             " %_Green% "Choose a menu option using your keyboard [1,2,3,0]"
+choice /C:1230 /N
+set _el=!errorlevel!
+if !_el!==4  exit /b
+if !_el!==3  start %mas%genuine-installation-media &goto :oh_menu
+if !_el!==2  goto :oh_uninstall
+if !_el!==1  goto :oh_menu2
+goto :oh_menu
+)
+
+::========================================================================================================================================
+
+:oh_menu2
+
+cls
+if not defined terminal (
+mode 140, 32
+if exist "%SysPath%\spp\store_test\" mode 140, 32
+%psc% "&{$W=$Host.UI.RawUI.WindowSize;$B=$Host.UI.RawUI.BufferSize;$W.Height=32;$B.Height=300;$Host.UI.RawUI.WindowSize=$W;$Host.UI.RawUI.BufferSize=$B;}" %nul%
+)
+title  Ohook Activation %masver%
+
+echo:
+echo Initializing...
+call :dk_chkmal
+
+if not exist %SysPath%\%_slexe% (
+%eline%
+echo [%SysPath%\%_slexe%] file is missing, aborting...
+echo:
+if not defined results (
+call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run DISM Restore and SFC Scan options."
+call :dk_color %Blue% "After that, restart system and try activation again."
+echo:
+set fixes=%fixes% %mas%troubleshoot
+call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%troubleshoot"
+)
+goto dk_done
+)
+
+::========================================================================================================================================
 
 set spp=SoftwareLicensingProduct
 set sps=SoftwareLicensingService
@@ -3581,6 +3687,150 @@ M--u-D----BE-----QBW-GE-cgBG-Gk-b-Bl-Ek-bgBm-G8------CQ-B----FQ-cgBh-G4-cwBs-GE-
 
 :+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+:TSforgeActivation
+
+::  To activate Windows, run the script with "/Z-Windows" parameter or change 0 to 1 in below line
+set _actwin=0
+
+::  To activate Windows ESU, run the script with "/Z-ESU" parameter or change 0 to 1 in below line
+set _actesu=0
+
+::  To activate all Office apps (including Project/Visio), run the script with "/Z-Office" parameter or change 0 to 1 in below line
+set _actoff=0
+
+::  To activate only Project/Visio, run the script with "/Z-ProjectVisio" parameter or change 0 to 1 in below line
+set _actprojvis=0
+
+::  To activate all Windows/ESU/Office, run the script with "/Z-WindowsESUOffice" parameter or change 0 to 1 in below line
+set _actwinesuoff=0
+
+::  Advanced options:
+::  To activate Windows K-M-S host (csvlk), run the script with "/Z-WinHost" parameter or change 0 to 1 in below line
+set _actwinhost=0
+
+::  To activate Office K-M-S host (csvlk), run the script with "/Z-OffHost" parameter or change 0 to 1 in below line
+set _actoffhost=0
+
+::  To activate Windows 8/8.1 APPX Sideloading (APPXLOB), run the script with "/Z-APPX" parameter or change 0 to 1 in below line
+set _actappx=0
+
+::  To activate certain activation IDs, change 0 to 1 in below line and set activation IDs in "tsids" variable, you can enter multiple by adding a space after each of them
+::  or run the script with "/Z-ID-ActivationIdGoesHere" parameter. If you want to add multiple through parameter, pass each of them in separate parameters
+set _actman=
+set tsids=
+
+::  To reset rearm counter, evaluation period and clear the tamper state, key lock, run the script with "/Z-Reset" parameter or change 0 to 1 in below line
+set _resall=0
+
+::  Debug Mode:
+::  To run the script in debug mode, change 0 to any parameter above that you want to run, in below line
+set "_debug=0"
+
+::  Script will run in unattended mode if parameters are used OR value is changed in above lines.
+::  If multiple options are selected then script will only pick one from the advanced option.
+
+
+
+::========================================================================================================================================
+
+cls
+color 07
+set KS=K%blank%MS
+title  TSforge Activation %masver%
+
+set _args=
+set _elev=
+set _unattended=0
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args for %%A in (%_args%) do (
+if /i "%%A"=="-el"                     (set _elev=1)
+if /i "%%A"=="/Z-Windows"              (set _actwin=1)
+if /i "%%A"=="/Z-ESU"                  (set _actesu=1)
+if /i "%%A"=="/Z-Office"               (set _actoff=1)
+if /i "%%A"=="/Z-ProjectVisio"         (set _actprojvis=1)
+if /i "%%A"=="/Z-WindowsESUOffice"     (set _actwinesuoff=1)
+if /i "%%A"=="/Z-WinHost"              (set _actwinhost=1)
+if /i "%%A"=="/Z-OffHost"              (set _actoffhost=1)
+if /i "%%A"=="/Z-APPX"                 (set _actappx=1)
+echo "%%A" | find /i "/Z-ID-"  >nul && (set _actman=1& set "filtsids=%%A" & call set "filtsids=%%filtsids:~6%%" & if defined filtsids call set tsids=%%filtsids%% %%tsids%%)
+if /i "%%A"=="/Z-Reset"                (set _resall=1)
+)
+
+if not defined tsids set _actman=0
+for %%A in (%_actwin% %_actesu% %_actoff% %_actprojvis% %_actwinesuoff% %_actwinhost% %_actoffhost% %_actappx% %_actman% %_resall%) do (if "%%A"=="1" set _unattended=1)
+
+if %winbuild% LSS 7600 (
+reg query "HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5" /v Install %nul2% | find /i "0x1" %nul1% || (
+%eline%
+echo .NET 3.5 Framework is not installed in your system.
+echo Install it using the following URL.
+echo:
+echo https://www.microsoft.com/download/details.aspx?id=25150
+if %_unattended%==0 start https://www.microsoft.com/download/details.aspx?id=25150
+goto dk_done
+)
+)
+
+::========================================================================================================================================
+
+:ts_menu
+
+if %_unattended%==0 (
+cls
+if not defined terminal mode 76, 33
+title  TSforge Activation %masver%
+
+echo:
+echo:
+echo:
+echo        ______________________________________________________________
+echo: 
+echo               [1] Activate - Windows
+echo               [2] Activate - ESU
+echo               [3] Activate - Office [All]
+echo               [4] Activate - Office [Project/Visio]
+echo               [5] Activate - All
+echo               _______________________________________________  
+echo: 
+echo                   Advanced Options:
+echo:
+echo               [A] Activate - Windows %KS% Host
+echo               [B] Activate - Office %KS% Host
+echo               [C] Activate - Windows 8/8.1 APPX Sideloading
+echo               [D] Activate - Manually Select Products
+if defined _vis (
+echo               [E] Reset    - Rearm/Timers
+) else (
+echo               [E] Reset    - Rearm/Timers/Tamper/Lock
+)
+echo               _______________________________________________       
+echo:
+echo               [6] Remove TSforge Activation
+echo               [7] Download Office
+echo               [0] %_exitmsg%
+echo        ______________________________________________________________
+echo:
+call :dk_color2 %_White% "            " %_Green% "Choose a menu option using your keyboard..."
+choice /C:12345ABCDE670 /N
+set _el=!errorlevel!
+
+if !_el!==13 exit /b
+if !_el!==12 start %mas%genuine-installation-media & goto :ts_menu
+if !_el!==11 call :ts_remove & cls & goto :ts_menu
+if !_el!==10 cls & setlocal & set "_resall=1"       & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==9  cls & setlocal & set "_actman=1"       & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==8  cls & setlocal & set "_actappx=1"      & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==7  cls & setlocal & set "_actoffhost=1"   & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==6  cls & setlocal & set "_actwinhost=1"   & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==5  cls & setlocal & set "_actwinesuoff=1" & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==4  cls & setlocal & set "_actprojvis=1"   & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==3  cls & setlocal & set "_actoff=1"       & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==2  cls & setlocal & set "_actesu=1"       & call :ts_start & endlocal & cls & goto :ts_menu
+if !_el!==1  cls & setlocal & set "_actwin=1"       & call :ts_start & endlocal & cls & goto :ts_menu
+goto :ts_menu
+)
 
 ::========================================================================================================================================
 
@@ -11140,6 +11390,167 @@ exit /b
 
 :+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+:KMSActivation
+
+::  To activate Windows with K-M-S activation, run the script with "/K-Windows" parameter or change 0 to 1 in below line
+set _actwin=0
+
+::  To activate all Office apps (including Project/Visio) with K-M-S activation, run the script with "/K-Office" parameter or change 0 to 1 in below line
+set _actoff=0
+
+::  To activate only Project/Visio with K-M-S activation, run the script with "/K-ProjectVisio" parameter or change 0 to 1 in below line
+set _actprojvis=0
+
+::  To activate all Windows/Office with K-M-S activation, run the script with "/K-WindowsOffice" parameter or change 0 to 1 in below line
+set _actwinoff=0
+
+::  To disable changing Windows/Office edition if current edition doesn't support K-M-S activation, run the script with "/K-NoEditionChange" parameter or change 0 to 1 in below line
+set _NoEditionChange=0
+
+::  To NOT auto-install renewal task with activation, run the script with "/K-NoRenewalTask" parameter or change 0 to 1 in below line
+set _norentsk=0
+
+::  To uninstall K-M-S, run the script with "/K-Uninstall" parameter or change 0 to 1 in below line. It'll take preference over any other parameter.
+set _uni=0
+
+::  Advanced options:
+::  Don't use renewal task option if you are going to use a specific server name instead of public servers used in the script
+
+::  To specify a server address for activation, run the script with "/K-Server-YOURKMSSERVERNAME" parameter or add it in below line after = sign
+set _server=
+
+::  To specify a port for activation, run the script with "/K-Port-YOURPORTNAME" parameter or add it in below line after = sign
+set _port=
+
+::  Script will run in unattended mode if parameters are used OR value is changed in above lines FOR activation or uninstall.
+
+::========================================================================================================================================
+
+cls
+color 07
+set KS=K%blank%MS
+title  Online %KS% Activation %masver%
+
+set _args=
+set _elev=
+set _unattended=0
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args for %%A in (%_args%) do (
+if /i "%%A"=="-el"                        (set _elev=1)
+if /i "%%A"=="/K-Windows"                 (set _actwin=1)
+if /i "%%A"=="/K-Office"                  (set _actoff=1)
+if /i "%%A"=="/K-ProjectVisio"            (set _actprojvis=1)
+if /i "%%A"=="/K-WindowsOffice"           (set _actwinoff=1)
+if /i "%%A"=="/K-NoEditionChange"         (set _NoEditionChange=1)
+if /i "%%A"=="/K-NoRenewalTask"           (set _norentsk=1)
+if /i "%%A"=="/K-Uninstall"               (set _uni=1)
+echo "%%A" | find /i "/K-Port-"   >nul && (set "_port=%%A"   & call set "_port=%%_port:~8%%")
+echo "%%A" | find /i "/K-Server-" >nul && (set "_server=%%A" & call set "_server=%%_server:~10%%")
+)
+
+for %%A in (%_actwin% %_actoff% %_actprojvis% %_actwinoff% %_uni%) do (if "%%A"=="1" set _unattended=1)
+
+::========================================================================================================================================
+
+if %_uni%==1 goto :ks_uninstall
+
+:ks_menu
+
+if defined _server set _norentsk=1
+if not defined _server set _port=
+
+if %_unattended%==0 (
+cls
+if not defined terminal mode 76, 30
+title  Online %KS% Activation %masver%
+
+echo:
+echo:
+echo:
+echo:
+if exist "%ProgramFiles%\Activation-Renewal\Activation_task.cmd" (
+find /i "Ver:2.7" "%ProgramFiles%\Activation-Renewal\Activation_task.cmd" %nul% || (
+call :dk_color %_Yellow% "              Old renewal task found, run activation to update it."
+)
+)
+echo        ______________________________________________________________
+echo: 
+echo               [1] Activate - Windows
+echo               [2] Activate - Office [All]
+echo               [3] Activate - Office [Project/Visio]
+echo               [4] Activate - All
+echo               _______________________________________________  
+echo: 
+if %_norentsk%==0 (
+echo               [5] Renewal Task With Activation       [Yes]
+) else (
+call :dk_color2 %_White% "              [5] Renewal Task With Activation        " %_Yellow% "[No]"
+)
+if %_NoEditionChange%==0 (
+echo               [6] Change Edition If Needed           [Yes]
+) else (
+call :dk_color2 %_White% "              [6] Change Edition If Needed            " %_Yellow% "[No]"
+)
+echo               [7] Uninstall Online %KS%
+echo               _______________________________________________       
+echo:
+if defined _server (
+echo               [8] Set %KS% Server/Port [%_server%] [%_port%]
+) else (
+echo               [8] Set %KS% Server/Port
+)
+echo               [9] Download Office
+echo               [0] %_exitmsg%
+echo        ______________________________________________________________
+echo:
+call :dk_color2 %_White% "       " %_Green% "Choose a menu option using your keyboard [1,2,3,4,5,6,7,8,9,0]"
+choice /C:1234567890 /N
+set _el=!errorlevel!
+
+if !_el!==10 exit /b
+if !_el!==9 start %mas%genuine-installation-media & goto :ks_menu
+if !_el!==8 goto :ks_ip
+if !_el!==7 cls & call :ks_uninstall & cls & goto :ks_menu
+if !_el!==6 (if %_NoEditionChange%==0 (set _NoEditionChange=1) else (set _NoEditionChange=0)) & goto :ks_menu
+if !_el!==5 (if %_norentsk%==0 (set _norentsk=1) else (set _norentsk=0)) & goto :ks_menu
+if !_el!==4 cls & setlocal & set "_actwin=1" & set "_actoff=1" & set "_actprojvis=0" & call :ks_start & endlocal & cls & goto :ks_menu
+if !_el!==3 cls & setlocal & set "_actwin=0" & set "_actoff=0" & set "_actprojvis=1" & call :ks_start & endlocal & cls & goto :ks_menu
+if !_el!==2 cls & setlocal & set "_actwin=0" & set "_actoff=1" & set "_actprojvis=0" & call :ks_start & endlocal & cls & goto :ks_menu
+if !_el!==1 cls & setlocal & set "_actwin=1" & set "_actoff=0" & set "_actprojvis=0" & call :ks_start & endlocal & cls & goto :ks_menu
+goto :ks_menu
+)
+
+::========================================================================================================================================
+
+:ks_start
+
+cls
+if not defined terminal (
+mode 115, 32
+if exist "%SysPath%\spp\store_test\" mode 135, 32
+%psc% "&{$W=$Host.UI.RawUI.WindowSize;$B=$Host.UI.RawUI.BufferSize;$W.Height=32;$B.Height=300;$Host.UI.RawUI.WindowSize=$W;$Host.UI.RawUI.BufferSize=$B;}" %nul%
+)
+title  Online %KS% Activation %masver%
+
+echo:
+echo Initializing...
+call :dk_chkmal
+
+if not exist %SysPath%\%_slexe% (
+%eline%
+echo [%SysPath%\%_slexe%] file is missing, aborting...
+echo:
+if not defined results (
+call :dk_color %Blue% "Go back to Main Menu, select Troubleshoot and run DISM Restore and SFC Scan options."
+call :dk_color %Blue% "After that, restart system and try activation again."
+echo:
+set fixes=%fixes% %mas%troubleshoot
+call :dk_color2 %Blue% "Check this webpage for help - " %_Yellow% " %mas%troubleshoot"
+)
+goto dk_done
+)
 
 ::========================================================================================================================================
 
