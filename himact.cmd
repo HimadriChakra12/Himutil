@@ -44,6 +44,63 @@ exit /b
 
 ::========================================================================================================================================
 
+set "blank="
+set "mas=ht%blank%tps%blank%://mass%blank%grave.dev/"
+
+::  Check if Null service is working, it's important for the batch script
+
+sc query Null | find /i "RUNNING"
+if %errorlevel% NEQ 0 (
+echo:
+echo Null service is not running, script may crash...
+echo:
+echo:
+echo Check this webpage for help - %mas%fix_service
+echo:
+echo:
+ping 127.0.0.1 -n 20
+)
+cls
+
+::  Check LF line ending
+
+pushd "%~dp0"
+>nul findstr /v "$" "%~nx0" && (
+echo:
+echo Error - Script either has LF line ending issue or an empty line at the end of the script is missing.
+echo:
+echo:
+echo Check this webpage for help - %mas%troubleshoot
+echo:
+echo:
+ping 127.0.0.1 -n 20 >nul
+popd
+exit /b
+)
+popd
+
+::========================================================================================================================================
+
+cls
+color 07
+title  Microsoft_Activation_Scripts %masver%
+
+set _args=
+set _elev=
+set _unattended=0
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args set _args=%_args:re1=%
+if defined _args set _args=%_args:re2=%
+if defined _args (
+for %%A in (%_args%) do (
+if /i "%%A"=="-el"                    set _elev=1
+)
+)
+
+if defined _args echo "%_args%" | find /i "/" >nul && set _unattended=1
+
 ::========================================================================================================================================
 
 set "nul1=1>nul"
@@ -17778,6 +17835,4 @@ if ($appIdsList.Count -gt 0) {
 ::========================================================================================================================================
 ::
 :: Leave empty line below
-
-
 
