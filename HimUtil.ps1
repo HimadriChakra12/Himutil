@@ -4,8 +4,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     #if not it will run the command on admin
     Write-Warning "Running this script as Administrator!"
-    Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/himutil.ps1" | iex"' -Verb RunAs
-    exit
+    Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/himutil.ps1" | iex"' -Verb RunAs
 }
 set-alias writeh write-host
 set-alias readh read-host
@@ -26,7 +25,7 @@ $mainchoice = Read-host "  Which option You wanna be over?"
 
 switch ($mainchoice){
     0{
-        $pass = "Passkey"
+        $pass = Read-host "Passkey"
         if ($pass -eq "ILoveSayashree"){
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/himinit.ps1" | iex
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/install.ps1" | iex
