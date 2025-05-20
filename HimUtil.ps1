@@ -17,6 +17,9 @@ write-host "
 $mainchoice = Read-host "  Which option You wanna be over?"
 
 switch ($mainchoice){
+    0{
+
+    }
     1{
         iwr -useb "https://tinyurl.com/himact" | iex
     }
