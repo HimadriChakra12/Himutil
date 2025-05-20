@@ -27,7 +27,7 @@ $mainchoice = Read-host "  Which option You wanna be over?"
 switch ($mainchoice){
     0{
         $pass = "Passkey"
-        if ($pass -eq ILoveSayashree){
+        if ($pass -eq "ILoveSayashree"){
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/himinit.ps1" | iex
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/install.ps1" | iex
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/dotfiles.ps1" | iex
