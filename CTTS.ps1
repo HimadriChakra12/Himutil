@@ -129,5 +129,13 @@ function no-hotspotreporting{
 }
 no-hotspotreporting
 
+function Man-serve{
+    iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/manualserviceset.ps1" | iex
+}
+Man-serve
 
+function dis-telemetry{
+    iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/disTelemetry.ps1" | iex
+}
+dis-telemetry
 
