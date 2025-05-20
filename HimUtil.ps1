@@ -2,7 +2,7 @@ clear
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Warning "Running this script as Administrator!"
-        #Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/himutil" | iex"' -Verb RunAs
+        Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/himutil" | iex"' -Verb RunAs
 }
 set-alias writeh write-host
 set-alias readh read-host
