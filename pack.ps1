@@ -1,3 +1,6 @@
+set-alias readh read-host
+set-alias writeh write-host
+set-alias startp start-process
 writeh "  
 1. Chocolatey
 2. Scoop            
@@ -13,7 +16,7 @@ switch ($choicectt){
         startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "irm -Uri https://get.scoop.sh | iex"'  
     }
     3{
-        startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "wsreset -i"' -wait
+        startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "wsreset -i; exit"' -wait
             while ($true) {
                 $store = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
                     if ($store) {
