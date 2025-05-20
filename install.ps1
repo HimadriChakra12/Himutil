@@ -1,10 +1,9 @@
-$wingetpacks = @(
-    @{ Name = "PSReadLine"; Command = {
+Write-Host "`nInstalling PSReadLine" -ForegroundColor Cyan
         Install-Module -Name PowerShellGet -Force
         Install-Module PSReadLine -AllowPrerelease -Force
         Install-Module PSReadLine
-    }},
-    @{ Name = "Edge WebView2"; Command = { winget install Microsoft.EdgeWebView2Runtime }},
+$wingetpacks = @(
+    @{ Name = "Edge WebView2"; Command = { winget install Microsoft.EdgeWebView2Runtime -h --accept-package-agreements --accept-source-agreements }},
     @{ Name = "DirectX"; Command = { winget install Microsoft.DirectX -h --accept-package-agreements --accept-source-agreements }},
     @{ Name = "gsudo"; Command = { winget install gsudo -h --accept-package-agreements --accept-source-agreements }},
     @{ Name = "Powershell"; Command = { winget install 9MZ1SNWT0N5D -h --accept-package-agreements --accept-source-agreements }},
@@ -51,6 +50,7 @@ $wingetpacks = @(
     @{ Name = "FxSound"; Command = { winget install Fxsound.Fxsound -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "gPodder"; Command = { winget install gpodder.gpodder -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "7+ Taskbar Tweaker"; Command = { winget install RamenSoftware.7+TaskbarTweaker -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "OBS Studio"; Command = { winget install OBSProject.OBSStudio -h --accept-package-agreements --accept-source-agreements }}
 )
 
 $total = $wingetpacks.Count
