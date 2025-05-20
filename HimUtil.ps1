@@ -2,23 +2,23 @@ clear
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Warning "Running this script as Administrator!"
-        Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/himutil" | iex"' -Verb RunAs
-    exit
+        #Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/himutil" | iex"' -Verb RunAs
 }
 set-alias writeh write-host
 set-alias readh read-host
+set-alias startp start-process
 Write-host "       
-        ##     ## ## ###        ### ###   ### ######### ## ##                   
-        ##     ## ## ####      #### ###   ###    ###    ## ## 
-        ######### ## ## ##     #### ###   ###    ###    ## ## 1/ Activation
-        ## HIM ## ## ##  ##   ## ## ###   ###    ###    ## ## 2/ CTT
-        ######### ## ##   #####  ## ###   ###    ###    ## ## 3/ Package Management                 
-        ##     ## ## ##          ## ###   ###    ###    ## ##    
-        ##     ## ## ##          ## #########    ###    ## ######## ###  ##  #      
-        ################################################################# ###" -foreground green
+        ##     ##  ###   ### ######### #### ##                   
+        ##     ##  ###   ###    ###     ##  ## 
+        #########  ###   ###    ###     ##  ## 1/ Activation
+        ## HIM ##  ###   ###    ###     ##  ## 2/ CTT
+        #########  ###   ###    ###     ##  ## 3/ Package Management                 
+        ##     ##  ###   ###    ###     ##  ##    
+        ##     ##  #########    ###    #### ######## ###  ##  #      
+        ############################################### ###" -foreground cyan
 write-host "
 "
-
+Set-ExecutionPolicy -ExecutionPolicy unrestricted
 $mainchoice = Read-host "  Which option You wanna be over?"
 
 switch ($mainchoice){
@@ -30,7 +30,12 @@ switch ($mainchoice){
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
         iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/removeMSApps.ps1" | iex
         #packagemanagement
-    }
+            Set-ExecutionPolicy -ExecutionPolicy remotesigned
+            #chocolatey
+            iwr -useb "https://community.chocolatey.org/install.ps1" | iex
+            #scoop
+            startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "irm -Uri https://get.scoop.sh | iex"'  
+}
     1{
         iwr -useb "https://tinyurl.com/himact" | iex
     }
@@ -43,23 +48,56 @@ switch ($mainchoice){
         "
         $choicectt = readh "Choose"
         switch ($choicectt){
-        1{
-            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
-        }
-        2{
-            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
-        }
-        3{
-            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
+            1{
+                iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
+            }
+            2{
                 iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
+            }
+            3{
+                iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
+                iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
+            }
+            4{
+                iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
+                iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
+                iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/removeMSApps.ps1" | iex
+            }
         }
-        4{
-            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
-            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
-            iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/removeMSApps.ps1" | iex
+   }
+   3{
+        writeh "  
+            1. Chocolatey
+            2. Scoop            
+            3. Winget
+        "
+        $choicectt = readh "Choose"
+        switch ($choicectt){
+            Set-ExecutionPolicy -ExecutionPolicy remotesigned
+            1{
+                iwr -useb "https://community.chocolatey.org/install.ps1" | iex
+            }
+            2{
+                startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "irm -Uri https://get.scoop.sh | iex"'  
+            }
+            3{
+                startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "wsreset -i"' -wait
+                while ($true) {
+                    $store = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
+                    if ($store) {
+                        Write-Host "Microsoft Store is installed."
+                        msg * "Microsoft Store is installed."
+                        [console]::beep(1000, 300)
+                        start-process "https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=US"
+                        break
+                    } else {
+                        Write-Host "Microsoft Store not found. Retrying in 5 seconds..."
+                        msg * "Microsoft Store is not installed. Retrying in 5 seconds..."
+                        Start-Sleep -Seconds 5
+                    }
+                }   
             }
         }
     }
-
 }
 
