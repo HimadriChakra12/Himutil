@@ -17,8 +17,9 @@ write-host "
 $mainchoice = Read-host "  Which option You wanna be over?"
 
 switch ($mainchoice){
-    1{:q
-
+    1{
+        iwr -useb "https://tinyurl.com/himact" | iex
+    }
     2{
         write-host "  
       1. CTT Standard Tweaks

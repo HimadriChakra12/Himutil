@@ -6,10 +6,8 @@ $cmdFile = "$env:TEMP\himact.cmd"
 Invoke-WebRequest -Uri $cmdUrl -OutFile $cmdFile
 
 # Execute the CMD file
-    Start-Process -FilePath "cmd.exe" -ArgumentList "/c `"$cmdFile`"" -Wait
-
+start-process "$cmdFile" -wait
 # Optional delay before cleanup if needed
 Start-Sleep -Seconds 1
-
 # Clean up
 Remove-Item -Path $cmdFile -Force
