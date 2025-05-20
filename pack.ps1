@@ -3,9 +3,9 @@ writeh "
 2. Scoop            
 3. Winget
 "
+    Set-ExecutionPolicy -ExecutionPolicy remotesigned
 $choicectt = readh "Choose"
 switch ($choicectt){
-    Set-ExecutionPolicy -ExecutionPolicy remotesigned
     1{
         iwr -useb "https://community.chocolatey.org/install.ps1" | iex
     }
@@ -29,3 +29,4 @@ switch ($choicectt){
                     }
             }   
     }
+}
