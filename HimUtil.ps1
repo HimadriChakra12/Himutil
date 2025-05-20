@@ -5,7 +5,6 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     #if not it will run the command on admin
     Write-Warning "Running this script as Administrator!"
         Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/himinit.ps1" | iex; exit"' -Verb RunAs
-        exit
 }
 set-alias writeh write-host
 set-alias readh read-host
