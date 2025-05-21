@@ -1,5 +1,5 @@
 # Configuration
-$cmdUrl = "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/himact.cmd"  # Replace with your actual raw URL
+$cmdUrl = "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/Activator/himact.cmd"  # Replace with your actual raw URL
 $cmdFile = "$env:TEMP\himact.cmd"
 
 # Download the CMD file

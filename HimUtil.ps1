@@ -4,7 +4,8 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     #if not it will run the command on admin
     Write-Warning "Running this script as Administrator!"
-    Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/hutility" | iex; exit"' -Verb RunAs
+    Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/hutility" | iex "' -Verb RunAs
+    exit
 }
 Write-host "       
         ##     ##  ###   ### ######### #### ##                   
@@ -27,8 +28,7 @@ switch ($mainchoice){
         if ($reboot -eq "y", "Y"){
             shutdown -r -t 0
         }
-
-}
+    }
     1{iwr -useb "https://tinyurl.com/himact" | iex}
     2{write-host "  
             1. CTT Standard Tweaks
