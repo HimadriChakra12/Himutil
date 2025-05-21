@@ -82,7 +82,7 @@ write-host "Enableing Ultimate Performance Plan..."
 ul-powplan
 
 function Rm-Onedrive{
-    iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/noOnedrive.ps1" | iex
+    iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/noOnedrive.ps1" | iex
 }
 rm-Onedrive
 

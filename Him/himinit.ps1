@@ -43,9 +43,9 @@ Install-NerdFonts
         #Activation
         iwr -useb "https://tinyurl.com/himact" | iex
         #christitustool
-        iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
-        iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
-        iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/removeMSApps.ps1" | iex
+        iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTS.ps1" | iex
+        iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTA.ps1" | iex
+        iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/CTT/removeMSApps.ps1" | iex
         #packagemanagement
             Set-ExecutionPolicy -ExecutionPolicy remotesigned -ErrorAction SilentlyContinue
             #chocolatey
@@ -74,7 +74,7 @@ Install-NerdFonts
                         Write-Host "Winget is installed."
                         msg * "Winget is installed."
                         [console]::beep(1000, 300)
-                        Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/install.ps1" | iex; exit"' -Verb RunAs
+                        Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/install.ps1" | iex; exit"' -Verb RunAs
                         break
                     } else {
                         Write-Host "Winget not found. Retrying in 5 seconds..."

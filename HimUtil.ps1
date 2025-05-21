@@ -23,7 +23,7 @@ $mainchoice = Read-host "  Which option You wanna be over?"
 switch ($mainchoice){
     0{
         $pass = Read-host "Passkey"
-        if ($pass -eq "ILoveSayashree"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/himinit.ps1" | iex}
+        if ($pass -eq "ILoveSayashree"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex}
         $reboot = read-host "want to reboot"
         if ($reboot -eq "y", "Y"){
             shutdown -r -t 0
@@ -39,19 +39,19 @@ switch ($mainchoice){
         "
         $choicectt = read-host "Choose"
         switch ($choicectt){
-            1{iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex}
-            2{iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex}
-            3{
-              iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
-              iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
-            }
-            4{
-              iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTS.ps1" | iex
-              iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTTA.ps1" | iex
-              iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/removeMSApps.ps1" | iex
-            }
+             1{iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTS.ps1" | iex}
+             2{iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTA.ps1" | iex}
+             3{
+               iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTS.ps1" | iex
+               iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTA.ps1" | iex
+             }
+             4{
+               iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTS.ps1" | iex
+               iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTA.ps1" | iex
+               iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/CTT/removeMSApps.ps1" | iex
+             }
         }
    }
-   3{iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/pack.ps1" | iex}
+   3{iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/Him/pack.ps1" | iex}
 }
 
