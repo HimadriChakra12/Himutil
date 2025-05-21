@@ -47,11 +47,10 @@ Install-NerdFonts
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTA.ps1" | iex
         iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/CTT/removeMSApps.ps1" | iex
         #packagemanagement
-            Set-ExecutionPolicy -ExecutionPolicy remotesigned -ErrorAction SilentlyContinue
             #chocolatey
             iwr -useb "https://community.chocolatey.org/install.ps1" | iex
             #scoop
-            start-process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "irm -Uri https://get.scoop.sh | iex"'  
+            start-process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/scoop.ps1" | iex"'  
             #Winget
             start-process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "wsreset -i; exit"' -wait
             while ($true) {

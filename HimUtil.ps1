@@ -4,7 +4,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     #if not it will run the command on admin
     Write-Warning "Running this script as Administrator!"
-    Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/HimUtil" | iex; exit"' -Verb RunAs
+    Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/hutility" | iex; exit"' -Verb RunAs
 }
 Write-host "       
         ##     ##  ###   ### ######### #### ##                   
@@ -17,7 +17,6 @@ Write-host "
         ############################################### ###" -foreground cyan
 write-host "
 "
-Set-ExecutionPolicy -ExecutionPolicy unrestricted
 $mainchoice = Read-host "  Which option You wanna be over?"
 
 switch ($mainchoice){
