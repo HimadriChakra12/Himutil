@@ -22,7 +22,7 @@ $mainchoice = Read-host "  Which option You wanna be over?"
 switch ($mainchoice){
     0{
         $pass = Read-host "Passkey"
-        if ($pass -eq "ILoveSayashree"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex}
+        if ($pass -eq "Sayashree"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex}
         $reboot = read-host "want to reboot"
         if ($reboot -eq "y", "Y"){
             shutdown -r -t 0
