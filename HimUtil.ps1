@@ -10,12 +10,17 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 Write-host "       
         ##     ##  ###   ### ######### #### ##                   
         ##     ##  ###   ###    ###     ##  ## 
-        #########  ###   ###    ###     ##  ## 1/ Activation
-        ## HIM ##  ###   ###    ###     ##  ## 2/ CTT
-        #########  ###   ###    ###     ##  ## 3/ Package Management                 
+        #########  ###   ###    ###     ##  ## 
+        ## HIM ##  ###   ###    ###     ##  ## 
+        #########  ###   ###    ###     ##  ##                  
         ##     ##  ###   ###    ###     ##  ##    
         ##     ##  #########    ###    #### ######## ###  ##  #      
-        ############################################### ###" -foreground cyan
+        ############################################### ### 
+
+        1/ Activation
+        2/ CTT
+        3/ Package Management" -foreground cyan
+
 write-host "
 "
 $mainchoice = Read-host "  Which option You wanna be over?"
