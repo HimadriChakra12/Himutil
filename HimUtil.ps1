@@ -7,28 +7,32 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/hutility" | iex "' -Verb RunAs
     exit
 }
-Write-host "       
-        ##     ##  ###   ### ######### #### ##                   
-        ##     ##  ###   ###    ###     ##  ## 
-        #########  ###   ###    ###     ##  ## 
-        ## HIM ##  ###   ###    ###     ##  ## 
-        #########  ###   ###    ###     ##  ##                  
-        ##     ##  ###   ###    ###     ##  ##    
-        ##     ##  #########    ###    #### ######## ###  ##  #      
-        ############################################### ### 
-
-        1/ Activation
-        2/ CTT
-        3/ Package Management" -foreground cyan
-
+Write-host "
++----------------------------------------------------------------+
+|                                                                |
+|       ##     ##  ###   ### ######### #### ##                   |
+|       ##     ##  ###   ###    ###     ##  ##                   |
+|       #########  ###   ###    ###     ##  ##                   |
+|       ## HIM ##  ###   ###    ###     ##  ##                   |
+|       #########  ###   ###    ###     ##  ##                   |
+|       ##     ##  ###   ###    ###     ##  ##                   |
+|       ##     ##  #########    ###    #### ######## ##          |    
+|       ###############################################          |
+|                                                                |
+|       1/ Activation                                            |
+|       2/ CTT                                                   |
+|       3/ Package Management                                    |
+|                                                                |
++----------------------------------------------------------------+
+" -foreground cyan
 write-host "
 "
 $mainchoice = Read-host "        Which option You wanna be over?"
 
 switch ($mainchoice){
     0{
-        $pass = Read-host "Passkey"
-        if ($pass -eq "Sayashree"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex}
+        $pass = Read-host "        Passkey"
+        if ($pass -eq "key"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex}
         $reboot = read-host "want to reboot"
         if ($reboot -eq "y", "Y"){
             shutdown -r -t 0
