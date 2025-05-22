@@ -4,7 +4,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     [Security.Principal.WindowsBuiltInRole] "Administrator")) {
     #if not it will run the command on admin
     Write-Warning "Running this script as Administrator!"
-    Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/hutility" | iex "' -Verb RunAs
+    Start-Process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://tinyurl.com/hutility" | iex "' -Verb RunAs
     exit
 }
 Write-host "       
@@ -23,7 +23,7 @@ Write-host "
 
 write-host "
 "
-$mainchoice = Read-host "  Which option You wanna be over?"
+$mainchoice = Read-host "        Which option You wanna be over?"
 
 switch ($mainchoice){
     0{
@@ -57,5 +57,6 @@ switch ($mainchoice){
         }
    }
    3{iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/Him/pack.ps1" | iex}
+   4{exit}
 }
 
