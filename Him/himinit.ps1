@@ -68,7 +68,8 @@ Install-NerdFonts
             }   
 
             while ($true) {
-                $wing = (Get-Command winget -ErrorAction SilentlyContinue).Source
+                $wing = Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "(Get-Command winget -ErrorAction SilentlyContinue).Source"' -Verb RunAs
+
                     if ($wing) {
                         Write-Host "Winget is installed."
                         msg * "Winget is installed."
