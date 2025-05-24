@@ -51,7 +51,8 @@ $wingetpacks = @(
     @{ Name = "gPodder"; Command = { winget install gpodder.gpodder -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "7+ Taskbar Tweaker"; Command = { winget install RamenSoftware.7+TaskbarTweaker -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "OBS Studio"; Command = { winget install OBSProject.OBSStudio -h --accept-package-agreements --accept-source-agreements }}
-    @{ Name = "qBittorrent.qBittorrent.Qt6"; Command = { winget install qBittorrent.qBittorrent.Qt6 -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "qBittorrent"; Command = { winget install qBittorrent.qBittorrent.Qt6 -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "jq"; Command = { winget install jqlang.jq -h --accept-package-agreements --accept-source-agreements }}
 )
 
 $total = $wingetpacks.Count
