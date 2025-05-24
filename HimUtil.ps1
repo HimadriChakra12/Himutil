@@ -33,6 +33,15 @@ switch ($mainchoice){
     0{
         $pass = Read-host "        Passkey"
         if ($pass -eq "key"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex} else{ write-host "     Try Again" -foreground red}
+            while ($true = 1) {
+                if ($pass -eq "key"){
+                    iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex
+                } 
+                else{
+                    write-host "     Try Again" -foreground red
+                    $true = 1
+                    }
+            }   
         $reboot = read-host "want to reboot"
         if ($reboot -eq "y", "Y"){
             shutdown -r -t 0
