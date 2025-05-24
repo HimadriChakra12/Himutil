@@ -27,12 +27,12 @@ Write-host "
 " -foreground cyan
 write-host "
 "
-$mainchoice = Read-host "        Which option You wanna be over?"
+$mainchoice = Read-host "       Which option You wanna be over?"
 
 switch ($mainchoice){
     0{
         $pass = Read-host "        Passkey"
-        if ($pass -eq "key"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex}
+        if ($pass -eq "key"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex} else{ write-host "     Try Again" -foreground red}
         $reboot = read-host "want to reboot"
         if ($reboot -eq "y", "Y"){
             shutdown -r -t 0
