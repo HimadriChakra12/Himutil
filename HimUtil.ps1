@@ -31,21 +31,11 @@ $mainchoice = Read-host "       Which option You wanna be over?"
 
 switch ($mainchoice){
     0{
-        $pass = Read-host "        Passkey"
-        if ($pass -eq "key"){iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex} else{ write-host "     Try Again" -foreground red}
-            while ($true = 1) {
-                if ($pass -eq "key"){
-                    iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex
-                } 
-                else{
-                    write-host "     Try Again" -foreground red
-                    $true = 1
-                    }
-            }   
+            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/himinit.ps1" | iex
         $reboot = read-host "want to reboot"
-        if ($reboot -eq "y", "Y"){
-            shutdown -r -t 0
-        }
+            if ($reboot -eq "y", "Y"){
+                shutdown -r -t 0
+            }
     }
     1{iwr -useb "https://tinyurl.com/himact" | iex}
     2{write-host "  
