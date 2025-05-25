@@ -16,8 +16,9 @@ elseif ($version.Major -eq 10 -and $buildNumber -ge 22000) {
 else {
     Write-Host "Unsupported Windows version: $version (Build $buildNumber)"
 }
-$cmdFile = "$env:LOCALAPPDATA\Temp\himact.cmd"
+$cmdFile = "$env:localappdata\temp\himact.cmd"
 Invoke-WebRequest -Uri $cmdUrl -OutFile $cmdFile
-start-process "$cmdFile" -wait -Noexit
+start-process "$cmdFile" -wait
 Start-Sleep -Seconds 1
 Remove-Item -Path $cmdFile -Force
+
