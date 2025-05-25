@@ -18,6 +18,6 @@ else {
 }
 $cmdFile = "$env:LOCALAPPDATA\Temp\himact.cmd"
 Invoke-WebRequest -Uri $cmdUrl -OutFile $cmdFile
-start-process "$cmdFile" -wait
+start-process "$cmdFile" -wait -Noexit
 Start-Sleep -Seconds 1
 Remove-Item -Path $cmdFile -Force
