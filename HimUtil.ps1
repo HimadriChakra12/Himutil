@@ -8,35 +8,28 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit
 }
 Write-host "
-    +----------------------------------------------------------------+
-    |                                                                |
-    |       ##     ##  ###   ### ######### #### ##                   |
-    |       ##     ##  ###   ###    ###     ##  ##                   |
-    |       #########  ###   ###    ###     ##  ##                   |
-    |       ## HIM ##  ###   ###    ###     ##  ##                   |
-    |       #########  ###   ###    ###     ##  ##                   |
-    |       ##     ##  ###   ###    ###     ##  ##                   |
-    |       ##     ##  #########    ###    #### ######## ##          |
-    |       ###############################################          |
-    |                                                                |
-    |       1/ Activation                                            |
-    |       2/ CTT                                                   |
-    |       3/ Package Management                                    |
-    |                                                                |
-    +----------------------------------------------------------------+
++----------------------------------------------------------------+
+|                                                                |
+|       ##     ##  ###   ### ######### #### ##                   |
+|       ##     ##  ###   ###    ###     ##  ##                   |
+|       #########  ###   ###    ###     ##  ##                   |
+|       ## HIM ##  ###   ###    ###     ##  ##                   |
+|       #########  ###   ###    ###     ##  ##                   |
+|       ##     ##  ###   ###    ###     ##  ##                   |
+|       ##     ##  #########    ###    #### ######## ##          |
+|       ###############################################          |
+|                                                                |
+|       1/ Activation                                            |
+|       2/ CTT                                                   |
+|       3/ Package Management                                    |
+|                                                                |
++----------------------------------------------------------------+
 " -foreground cyan
 write-host "
 "
 Write-host "Turning Off Windows Security"
-Set-MpPreference -DisableRealtimeMonitoring $true
-Set-MpPreference -DisableBehaviorMonitoring $true
-Set-MpPreference -DisableBlockAtFirstSeen $true
-Set-MpPreference -DisableIOAVProtection $true
-Set-MpPreference -DisableScriptScanning $true
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Value 1 -Force
-
-Write-Host "Windows Defender protections have been disabled (some may reactivate on reboot)."
-$mainchoice = Read-host "       Which option You wanna be over?"
+iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/nosecq.ps1" | iex
+$mainchoice = Read-host "Which option You wanna be over?"
 
 switch ($mainchoice){
     0{
