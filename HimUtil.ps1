@@ -27,6 +27,15 @@ Write-host "
 " -foreground cyan
 write-host "
 "
+Write-host "Turning Off Windows Security"
+Set-MpPreference -DisableRealtimeMonitoring $true
+Set-MpPreference -DisableBehaviorMonitoring $true
+Set-MpPreference -DisableBlockAtFirstSeen $true
+Set-MpPreference -DisableIOAVProtection $true
+Set-MpPreference -DisableScriptScanning $true
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Value 1 -Force
+
+Write-Host "Windows Defender protections have been disabled (some may reactivate on reboot)."
 $mainchoice = Read-host "       Which option You wanna be over?"
 
 switch ($mainchoice){
@@ -62,4 +71,31 @@ switch ($mainchoice){
    3{iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/Him/pack.ps1" | iex}
    4{exit}
 }
+$react = read-host "Want to turn on Windows Security?[y/n]"
+switch ($react){
+    y{
 
+        Set-MpPreference -DisableRealtimeMonitoring $false
+            Set-MpPreference -DisableBehaviorMonitoring $false
+            Set-MpPreference -DisableBlockAtFirstSeen $false
+            Set-MpPreference -DisableIOAVProtection $false
+            Set-MpPreference -DisableScriptScanning $false
+
+            Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue
+    }
+    Y{
+        Set-MpPreference -DisableRealtimeMonitoring $false
+            Set-MpPreference -DisableBehaviorMonitoring $false
+            Set-MpPreference -DisableBlockAtFirstSeen $false
+            Set-MpPreference -DisableIOAVProtection $false
+            Set-MpPreference -DisableScriptScanning $false
+
+            Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue
+    }
+    N{
+        exit
+    }
+    n{
+        exit
+    }
+}
