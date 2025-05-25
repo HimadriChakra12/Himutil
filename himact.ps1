@@ -1,6 +1,6 @@
 # Configuration
 $cmdUrl = "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/Activator/himact.cmd"  # Replace with your actual raw URL
-$cmdFile = "$env:TEMP\himact.cmd"
+$cmdFile = "$env:LOCALAPPDATA\Temp\himact.cmd"
 
 # Download the CMD file
 Invoke-WebRequest -Uri $cmdUrl -OutFile $cmdFile
