@@ -1,7 +1,8 @@
-Write-Host "`nInstalling PSReadLine" -ForegroundColor Cyan
+    Write-host "Installing PSReadLine" -ForegroundColor cyan
         Install-Module -Name PowerShellGet -Force
         Install-Module PSReadLine -AllowPrerelease -Force
         Install-Module PSReadLine
+    }},
 $wingetpacks = @(
     @{ Name = "Edge WebView2"; Command = { winget install Microsoft.EdgeWebView2Runtime -h --accept-package-agreements --accept-source-agreements }},
     @{ Name = "DirectX"; Command = { winget install Microsoft.DirectX -h --accept-package-agreements --accept-source-agreements }},
@@ -50,9 +51,10 @@ $wingetpacks = @(
     @{ Name = "FxSound"; Command = { winget install Fxsound.Fxsound -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "gPodder"; Command = { winget install gpodder.gpodder -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "7+ Taskbar Tweaker"; Command = { winget install RamenSoftware.7+TaskbarTweaker -h --accept-package-agreements --accept-source-agreements }}
-    @{ Name = "OBS Studio"; Command = { winget install OBSProject.OBSStudio -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "qBittorrent"; Command = { winget install qBittorrent.qBittorrent.Qt6 -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "OBS Studio"; Command = { winget install OBSProject.OBSStudio -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "jq"; Command = { winget install jqlang.jq -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "sqlite"; Command = { winget install sqlite.sqlite -h --accept-package-agreements --accept-source-agreements }}
 )
 
 $total = $wingetpacks.Count
