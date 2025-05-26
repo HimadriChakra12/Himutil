@@ -6,8 +6,8 @@ Set-Service -Name 'HomeGroupListener' -StartupType Manual
 Set-Service -Name 'HomeGroupProvider' -StartupType Manual
 
 write-host "Deleting Temp Files..."
-Get-ChildItem -Path "C:\Windows\Temp" *.* -Recurse | Remove-Item -Force -Recurse
-Get-ChildItem -Path $env:TEMP *.* -Recurse | Remove-Item -Force -Recurse
+Get-ChildItem -Path "C:\Windows\Temp" *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+Get-ChildItem -Path $env:TEMP *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
 
 function System-Cleaner{
     cleanmgr.exe /d C: /VERYLOWDISK
