@@ -64,7 +64,7 @@ switch ($mainchoice){
    3{iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/Him/pack.ps1" | iex}
    4{exit}
 }
-$secu = read-host "Want to turn on Windows Security?[y/n]"
+$secu = read-host "Want to turn on Windows Security?[y/Y(recovery)/n]" -foreground cyan
 switch ($react){
     y{
         Set-MpPreference -DisableRealtimeMonitoring $false
@@ -80,7 +80,6 @@ switch ($react){
         Set-MpPreference -DisableBlockAtFirstSeen $false
         Set-MpPreference -DisableIOAVProtection $false
         Set-MpPreference -DisableScriptScanning $false
-        Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue
     }
     N{
         exit
@@ -89,3 +88,4 @@ switch ($react){
         exit
     }
 }
+
