@@ -48,15 +48,15 @@ function Rm-acc {
 
             try {
                 $ProgressPreference='SilentlyContinue'
-                    Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\AdobeCreativeCloudCleanerTool.exe" -UseBasicParsing -ErrorAction SilentlyContinue -Verbose
+                    Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\AdobeCreativeCloudCleanerTool.exe" -UseBasicParsing -ErrorAction SilentlyContinue 
                     $ProgressPreference='Continue'
-                    Start-Process -FilePath "$env:TEMP\AdobeCreativeCloudCleanerTool.exe" -Wait -ErrorAction SilentlyContinue -Verbose
+                    Start-Process -FilePath "$env:TEMP\AdobeCreativeCloudCleanerTool.exe" -Wait -ErrorAction SilentlyContinue 
             } catch {
                 Write-Error $_.Exception.Message
             } finally {
                 if (Test-Path -Path "$env:TEMP\AdobeCreativeCloudCleanerTool.exe") {
                     Write-Host "Cleaning up..."
-                        Remove-Item -Path "$env:TEMP\AdobeCreativeCloudCleanerTool.exe" -Verbose
+                        Remove-Item -Path "$env:TEMP\AdobeCreativeCloudCleanerTool.exe" 
                 }
             }
 }
@@ -66,11 +66,11 @@ Rm-acc
 function ul-powplan{
     $ultimatePlan = powercfg -list | Select-String -Pattern "Ultimate Performance"
         if ($ultimatePlan) {
-            Write-Host "Ultimate Performance plan is already installed."
+            Write-Host "Ultimate Performance plan is already installed." -foreground green
         } else {
-            Write-Host "Installing Ultimate Performance plan..."
+            Write-Host "Installing Ultimate Performance plan..." -foreground cyan
                 powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
-                Write-Host "> Ultimate Performance plan installed."
+                Write-Host "> Ultimate Performance plan installed." -foreground green
         }
 # Set the Ultimate Performance plan as active
     $ultimatePlanGUID = (powercfg -list | Select-String -Pattern "Ultimate Performance").Line.Split()[3]
