@@ -50,35 +50,19 @@ Install-NerdFonts
             #chocolatey
             iwr -useb "https://community.chocolatey.org/install.ps1" | iex
             #scoop
-            start-process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/scoop.ps1" | iex"'  
+            start-process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/scoop.ps1" | iex"'
             #Winget
-            start-process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "wsreset -i"' -wait
-            while ($true) {
-                $store = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
-                    if ($store) {
-                        Write-Host "Microsoft Store is installed."
-                            msg * "Microsoft Store is installed."
-                            [console]::beep(1000, 300)
-                            start-process "https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=US"
-                                break
-                    } else {
-                        Write-Host "Microsoft Store not found. Retrying in 5 seconds..."
-                            Start-Sleep -Seconds 5
-                    }
-            }   
-
-            while ($true) {
-                $wing = Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "(Get-Command winget -ErrorAction SilentlyContinue).Source"' -Verb RunAs
-
-                    if ($wing) {
-                        Write-Host "Winget is installed."
-                        msg * "Winget is installed."
-                        [console]::beep(1000, 300)
-                        Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/install.ps1" | iex"' -Verb RunAs
-                        break
-                    } else {
-                        Write-Host "Winget not found. Retrying in 5 seconds..."
-                            Start-Sleep -Seconds 5
-                    }
-            }   
+            start-process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "wsreset -i"' -wait -verb RunAs
+            $read = read-host "MS Store got installed[y]?"
+            switch ($read){
+                y{
+                    start-process "https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=US"
+                    $read = read-host "Winget got installed?[y]"
+                        switch ($read){
+                            1{
+                                Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/install.ps1" | iex"' -Verb RunAs
+                            }
+                        }
+                }
+            }
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/dotfiles.ps1" | iex

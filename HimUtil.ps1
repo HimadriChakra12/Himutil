@@ -72,7 +72,6 @@ switch ($react){
         Set-MpPreference -DisableBlockAtFirstSeen $false
         Set-MpPreference -DisableIOAVProtection $false
         Set-MpPreference -DisableScriptScanning $false
-        Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue
     }
     Y{
         Set-MpPreference -DisableRealtimeMonitoring $false
@@ -80,6 +79,7 @@ switch ($react){
         Set-MpPreference -DisableBlockAtFirstSeen $false
         Set-MpPreference -DisableIOAVProtection $false
         Set-MpPreference -DisableScriptScanning $false
+        Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -ErrorAction SilentlyContinue
     }
     N{
         exit
