@@ -55,6 +55,7 @@ $wingetpacks = @(
     @{ Name = "jq"; Command = { winget install jqlang.jq -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "sqlite"; Command = { winget install sqlite.sqlite -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "Sumatra PDF"; Command = { winget install sumatrapdf -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "Links"; Command = { winget install TwibrightLabs.Links -h --accept-package-agreements --accept-source-agreements }}
 )
 
 $total = $wingetpacks.Count
