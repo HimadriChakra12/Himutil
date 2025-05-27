@@ -20,18 +20,23 @@ function CCStopper {
 
 function AcrobatUpdates {
     $rootPath = "HKLM:\SOFTWARE\WOW6432Node\Adobe\Adobe ARM\Legacy\Acrobat"
-        $subKeys = Get-ChildItem -Path $rootPath | Where-Object { $_.PSChildName -like "{*}" }
-    foreach ($subKey in $subKeys) {
-        $fullPath = Join-Path -Path $rootPath -ChildPath $subKey.PSChildName
-            try {
-                Set-ItemProperty -Path $fullPath -Name Mode -Value 0
-                    Write-Host "Acrobat Updates have been disabled."
-            } catch {
-                Write-Host "Registry Key for changing Acrobat Updates does not exist in $fullPath"
+        if (test-path $rootPath){
+            $subKeys = Get-ChildItem -Path $rootPath | Where-Object { $_.PSChildName -like "{*}" }
+            foreach ($subKey in $subKeys) {
+                $fullPath = Join-Path -Path $rootPath -ChildPath $subKey.PSChildName
+                    try {
+                        Set-ItemProperty -Path $fullPath -Name Mode -Value 0
+                            Write-Host "Acrobat Updates have been disabled."
+                    } catch {
+                        Write-Host "Registry Key for changing Acrobat Updates does not exist in $fullPath"
+                    }
             }
-    }
+        } else{
+            write-host "Things are out of hands" -foreground red
+        }
 }
-write-host "Debloating Adobe.."
+
+write-host "Debloating Adobe.." -foreground green
 CCStopper
 AcrobatUpdates
 

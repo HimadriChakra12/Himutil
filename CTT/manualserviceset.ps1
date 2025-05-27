@@ -45,11 +45,14 @@ $services = @(
 function Convert-StartupType {
     param($type)
     switch ($type.ToLower()) {
-        "automatic" { return "Automatic" }
-        "manual" { return "Manual" }
-        "disabled" { return "Disabled" }
-        "automaticdelayedstart" { return "AutomaticDelayedStart" }
-        default { return $null }
+        "automatic"               { return "Automatic" }
+        "manual"                  { return "Manual" }
+        "disabled"                { return "Disabled" }
+        "automaticdelayedstart"  { return "AutomaticDelayedStart" }
+        default {
+            Write-Warning "Invalid StartupType '$type'"
+            return $null
+        }
     }
 }
 
@@ -57,31 +60,33 @@ foreach ($svc in $services) {
     $name = $svc.Name
     $startupType = Convert-StartupType $svc.StartupType
 
-    # Handle wildcard service names (like webthreatdefusersvc_*)
-    if ($name -like "*`*") {
-        $pattern = $name -replace '\*','$'  # Regex fix for wildcard
+    if (-not $startupType) {
+        Write-Warning "Skipping service '$name' due to invalid startup type."
+        continue
+    }
+
+    if ($name -like "*`**") {
+        # Handle wildcard names
         $matchingServices = Get-Service | Where-Object { $_.Name -like $name }
         foreach ($ms in $matchingServices) {
             try {
                 Write-Output "Setting startup type of service '$($ms.Name)' to $startupType"
                 Set-Service -Name $ms.Name -StartupType $startupType
             } catch {
-                Write-Warning "Failed to set service $($ms.Name): $_"
+                Write-Warning "Failed to set startup type for service '$($ms.Name)': $_"
             }
         }
     } else {
-        # Check if the service exists
         $service = Get-Service -Name $name -ErrorAction SilentlyContinue
         if ($service) {
             try {
                 Write-Output "Setting startup type of service '$name' to $startupType"
                 Set-Service -Name $name -StartupType $startupType
             } catch {
-                Write-Warning "Failed to set service $name: $_"
+                Write-Warning "Failed to set startup type for service '$name': $_"
             }
         } else {
             Write-Warning "Service '$name' not found."
         }
     }
 }
-
