@@ -75,4 +75,5 @@ foreach ($pkg in $wingetpacks) {
     $counter++
 }
 $host.UI.RawUI.WindowTitle = "Installation Completed $total packages"
-Write-Host "`nAll installations completed." -ForegroundColor Green
+start-sleep 2
+exit
