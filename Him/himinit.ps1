@@ -65,6 +65,4 @@ Install-NerdFonts
                         }
                 }
             }
-            if (){
             iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/dotfiles.ps1" | iex
-            }
