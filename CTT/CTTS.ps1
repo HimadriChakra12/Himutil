@@ -9,6 +9,8 @@ write-host "Deleting Temp Files..."
 Get-ChildItem -Path "C:\Windows\Temp" *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
 Get-ChildItem -Path $env:TEMP *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
 
+iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/temp.ps1" | iex
+
 function System-Cleaner{
     cleanmgr.exe /d C: /VERYLOWDISK
     Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
