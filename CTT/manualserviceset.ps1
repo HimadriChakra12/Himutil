@@ -73,7 +73,7 @@ foreach ($svc in $services) {
                 Write-Output "Setting startup type of service '$($ms.Name)' to $startupType"
                 Set-Service -Name $ms.Name -StartupType $startupType
             } catch {
-                Write-Warning "Failed to set startup type for service '$($ms.Name)': $_"
+                Write-Warning "Failed to set startup type for service '$($ms.Name)': $($_)"
             }
         }
     } else {
@@ -83,7 +83,7 @@ foreach ($svc in $services) {
                 Write-Output "Setting startup type of service '$name' to $startupType"
                 Set-Service -Name $name -StartupType $startupType
             } catch {
-                Write-Warning "Failed to set startup type for service '$name': $_"
+                Write-Warning "Failed to set startup type for service '$name': $($_)"
             }
         } else {
             Write-Warning "Service '$name' not found."
