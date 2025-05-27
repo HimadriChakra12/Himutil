@@ -2,7 +2,6 @@
         Install-Module -Name PowerShellGet -Force
         Install-Module PSReadLine -AllowPrerelease -Force
         Install-Module PSReadLine
-    }},
 $wingetpacks = @(
     @{ Name = "Edge WebView2"; Command = { winget install Microsoft.EdgeWebView2Runtime -h --accept-package-agreements --accept-source-agreements }},
     @{ Name = "DirectX"; Command = { winget install Microsoft.DirectX -h --accept-package-agreements --accept-source-agreements }},
