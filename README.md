@@ -13,7 +13,7 @@
 |                                                                |
 +----------------------------------------------------------------+
 ```
-A Utility that is easier than getting a Girlfriend and straighter than you.
+A Utility that is straighter than you and easier than pulling a girl, getting a Girlfriend.
 
 ```Powershell
 set-executionpolicy -executionpolicy unrestricted
@@ -45,5 +45,5 @@ CTT aka ChrisTitusTool aka WinUtil has a Tweaks section. Most of the people uses
 [4] will do them and will remove microsoft apps as well.
 
 ### Package management
-It partially automated(for LTSC users). Like you have to wait for the "MSStore" Installation, then manually install "winget" with it.
-Choco and Scoop is done.
+[1] Choco and Scoop is done.
+[2] It partially automated(for LTSC users). Like you have to wait for the "MSStore" Installation, then manually install "winget" with it.

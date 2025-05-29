@@ -40,12 +40,14 @@ function Install-NerdFonts {
     }
 }
 Install-NerdFonts
-        #Activation
+
+#Activation
         iwr -useb "https://tinyurl.com/himact" | iex
         #christitustool
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTS.ps1" | iex
         iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/CTT/CTTA.ps1" | iex
         iwr -useb "https://raw.githubusercontent.com/HimadriChakra12/Himutil/refs/heads/master/CTT/removeMSApps.ps1" | iex
+        iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -v 1.2.13.661.ga588f749-4064 -confirm_spoti_recomended_over -block_update_on"
         #packagemanagement
             #chocolatey
             iwr -useb "https://community.chocolatey.org/install.ps1" | iex
