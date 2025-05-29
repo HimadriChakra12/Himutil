@@ -7,29 +7,29 @@ writeh "
 3. Winget
 "
     Set-ExecutionPolicy -ExecutionPolicy remotesigned
-$choicectt = readh "Choose"
-switch ($choicectt){
+$choicepack = readh "Choose"
+switch ($choicepack){
     1{
         iwr -useb "https://community.chocolatey.org/install.ps1" | iex
     }
     2{
-        startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "irm -Uri https://get.scoop.sh | iex"'  
+        start-process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/scoop.ps1" | iex"'
     }
     3{
-        startp powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "wsreset -i; exit"' -wait
-            while ($true) {
-                $store = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
-                    if ($store) {
-                        Write-Host "Microsoft Store is installed."
-                            msg * "Microsoft Store is installed."
-                            [console]::beep(1000, 300)
-                            start-process "https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=US"
-                                break
-                    } else {
-                        Write-Host "Microsoft Store not found. Retrying in 5 seconds..."
-                            msg * "Microsoft Store is not installed. Retrying in 5 seconds..."
-                            Start-Sleep -Seconds 5
-                    }
-            }   
+        start-process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "wsreset -i"' -wait -verb RunAs
+
+            $read = read-host "MS Store got installed[y]?"
+            switch ($read){
+                y{
+                    start-process "https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=US"
+                        $read = read-host "Winget got installed?[y]"
+                        switch ($read){
+                            y{
+                                Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/install.ps1" | iex"' -Verb RunAs
+                            }
+                        }
+                }
+            }
+
     }
 }

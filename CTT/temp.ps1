@@ -1,7 +1,7 @@
 # Set path to temp directory
 $tempPath = "$env:LOCALAPPDATA\Temp"
 
-iwr -uri "https://github.com/HimadriChakra12/Himutil/releases/download/handle.exe/handle.exe" -OutFile "$env:TEMP/handle.exe" && copy-item "$env:TEMP/handle.exe" "C:/Windows/System32/handle.exe"
+iwr -uri "https://github.com/HimadriChakra12/Himutil/releases/download/handle.exe/handle.exe" -OutFile "$env:TEMP/handle.exe" ; copy-item "$env:TEMP/handle.exe" "C:/Windows/System32/handle.exe"
 
 # Path to Sysinternals handle tool
 $handlePath = "handle"  # Replace with full path if needed
