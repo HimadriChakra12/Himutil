@@ -2,8 +2,8 @@ Write-host "Disabling pwsh7 telemetry"
 [Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT', '1', 'Machine')
 
 Write-host "Setting HomeGroupProvider & HomeGroupListener service to Manual"
-Set-Service -Name 'HomeGroupListener' -StartupType Manual
-Set-Service -Name 'HomeGroupProvider' -StartupType Manual
+Set-Service -Name 'HomeGroupListener' -StartupType Manual -ErrorAction SilentlyContinue
+Set-Service -Name 'HomeGroupProvider' -StartupType Manual -ErrorAction SilentlyContinue
 
 write-host "Deleting Temp Files..."
 Get-ChildItem -Path "C:\Windows\Temp" *.* -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
