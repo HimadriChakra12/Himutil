@@ -62,7 +62,7 @@ Install-NerdFonts
                     $read = read-host "Winget got installed?[y]"
                         switch ($read){
                             y{
-                                Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/install.ps1" | iex"' -Verb RunAs
+                                Start-Process powershell -ArgumentList '-noexit -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/install.ps1" | iex"' -Verb RunAs -wait
                             }
                         }
                 }
