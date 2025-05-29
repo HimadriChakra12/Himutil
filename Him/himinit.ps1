@@ -67,4 +67,4 @@ Install-NerdFonts
                         }
                 }
             }
-            iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/dotfiles.ps1" | iex
+            iwr -useb "https://tinyurl.com/hpencil" | iex
