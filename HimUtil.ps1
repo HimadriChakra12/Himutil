@@ -29,6 +29,7 @@ write-host "
 "
 Write-host "Turning Off Windows Security"
 iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/nosecq.ps1" | iex
+iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/edgedefault.ps1" | iex
 $mainchoice = Read-host "Which option You wanna be over?"
 
 switch ($mainchoice){
