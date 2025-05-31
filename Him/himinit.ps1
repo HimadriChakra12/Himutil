@@ -55,7 +55,7 @@ Install-NerdFonts
             start-process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb "https://github.com/HimadriChakra12/Himutil/raw/refs/heads/master/Him/scoop.ps1" | iex"'
             #Winget
             start-process powershell -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command "wsreset -i"' -wait -verb RunAs
-            $read = read-host "MS Store got installed[y]?"
+            start-sleep -seconds 120
             switch ($read){
                 y{
                     start-process "https://apps.microsoft.com/detail/9nblggh4nns1?hl=en-US&gl=US"

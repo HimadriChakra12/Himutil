@@ -39,7 +39,7 @@ switch ($mainchoice){
                 shutdown -r -t 0
             }
     }
-    1{iwr -useb "https://tinyurl.com/himact" | iex}
+    1{irm "https://get.activated.win" | iex}
     2{write-host "  
             1. CTT Standard Tweaks
             2. CTT Advanced Tweaks
