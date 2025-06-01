@@ -53,6 +53,7 @@ $wingetpacks = @(
     @{ Name = "sqlite"; Command = { winget install sqlite.sqlite -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "Sumatra PDF"; Command = { winget install sumatrapdf -h --accept-package-agreements --accept-source-agreements }}
     @{ Name = "Lazygit"; Command = { winget install lazygit -h --accept-package-agreements --accept-source-agreements }}
+    @{ Name = "Terabox"; Command = { winget install baidu.terabox -h --accept-package-agreements --accept-source-agreements }}
 )
 
 $total = $wingetpacks.Count
